@@ -12,3 +12,6 @@ class Product(models.Model):
     image = models.CharField( max_length = 300)
     # Why? Because most websites store images on different servers
     # and store only urls on main site
+
+    def __str__(self):
+        return f'{self.name}'
