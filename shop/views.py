@@ -7,5 +7,6 @@ def home(request):
     products = Product.objects.all()
     context ={ 'items': products } # In template it will easy
                                 # to remember as items
+
     return render( request, 'index.html', context)
 
