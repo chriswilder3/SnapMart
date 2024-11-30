@@ -50,3 +50,12 @@ def search(request):
 
 # -----------Product detail view
 
+def detail( request, id):
+    # The id will be passed as path param, when we click on an itemcard
+    # which is the same id received here.
+
+    product = Product.objects.get(id= id)
+    # Get a single object only
+
+    # Create a detail.html now
+    return render( request, 'detail.html', {'item':product})
