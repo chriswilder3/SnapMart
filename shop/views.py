@@ -15,6 +15,12 @@ def search(request):
 
     if searchitem != '' and searchitem is not None:
         products = Product.objects.filter( name__icontains = searchitem)
-    context = {'items':products, 'searchterm':searchitem}
+        if products.exists():
+            context = {'items':products, 'searchterm':searchitem,'isSearchValid':True,'resultFound':True}
+        else:
+            context = {'searchterm':searchitem,'isSearchValid':True,'resultFound':False}
+    else:
+        # Invalid search
+        context = { 'searchterm':searchitem,'isSearchValid':False}
     return render(request, 'searchresults.html', context)
 

@@ -1,9 +1,9 @@
 {% extends 'master.html' %}
 
 {% block content %}
-    <h3> Search results for {{searchterm}}</h3>
-    
-    <div class="ProductList grid grid-cols-4 justify-around
+    <h3 class="ml-8 "> Search results for "{{searchterm}}" </h3>
+    {% if isSearchValid and resultFound  %}
+    <div class="ProductList md:grid grid-cols-4 justify-around
             items-center gap-2 ">
         
         {% for item in items %}
@@ -18,4 +18,10 @@
             </div>
         {% endfor %}
     </div>
+    {% elif isSearchValid %}
+       <p class="ml-10 my-3"> No such items found.</p>
+
+    {% else %}
+      <p class="ml-10 my-3">  Invalid Search!</p>
+    {% endif %}
 {% endblock %}
