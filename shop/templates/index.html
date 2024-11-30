@@ -5,28 +5,45 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <script src="http://cdn.tailwindcss.com"></script>
+
+    <style>
+        body{
+            font-family: "Poppins", sans-serif;
+        }
+    </style>
 </head>
-<body>
-    
+<body class="">
+    <!-- bg-gradient-to-r from-pink-200 to-orange-200 p-5  -->
      <nav>
 
      </nav>
-    <div class="jumbotron ">
-        <h1>
+    <div class="jumbotron p-4">
+        <h1 class="text-5xl font-bold py-2">
             SnapMart.
         </h1>
-        <h3>
+        <h3 class="text-3xl text-sky-500 font-semibold py-2 ">
             Discover More, Shop Better.
         </h3>
     </div>
-    <div class="ProductList ">
-        <h3>
-            Products
-        </h3>
+    <h3 class=" text-3xl px-4 py-2 font-semibold">
+        Products
+    </h3>
+    <div class="ProductList grid grid-cols-5
+            items-center gap-2 ">
+        
         {% for item in items %}
-            <img src="{{item.image}}" alt="">
-            <p> {{ item.name }} </p>
-            <p> {{ item.price }}</p>
+            <div class="bg-gray-200 mx-auto p-4 text-wrap font-medium rounded
+                    hover:bg-gray-300"> 
+                <img class="w-56 rounded" src="{{item.image}}" alt="">
+                <p class=" py-2 text-teal-500"> {{ item.name }} </p>
+                <p class="px-2 line-through ml-1 text-sm text-gray-600 "> <i> &#36 {{ item.price }} </i> </p>
+                <p class="px-2 text-green-500 text-lg font-semibold ">  &#36 {{ item.discount_price }}  </p>
+                
+            </div>
         {% endfor %}
     </div>
 </body>
