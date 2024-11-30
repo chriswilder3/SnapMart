@@ -1,0 +1,21 @@
+{% extends 'master.html' %}
+
+{% block content %}
+    <h3> Search results for {{searchterm}}</h3>
+    
+    <div class="ProductList grid grid-cols-4 justify-around
+            items-center gap-2 ">
+        
+        {% for item in items %}
+            <div class="border-2 border-slate-300 my-2 mx-auto p-4 text-wrap font-medium rounded
+                    hover:bg-gray-200"> 
+                <a href="">
+                    <img class="w-64 rounded" src="{{item.image}}" alt="">
+                    <p class=" py-2 text-teal-500"> {{ item.name }} </p>
+                    <p class="px-2 line-through ml-1 text-sm text-gray-600 "> <i> &#36 {{ item.price }} </i> </p>
+                    <p class="px-2 text-green-500 text-lg font-semibold ">  &#36 {{ item.discount_price }}  </p>
+                </a>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

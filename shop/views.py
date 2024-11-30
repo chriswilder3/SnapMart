@@ -10,3 +10,11 @@ def home(request):
 
     return render( request, 'index.html', context)
 
+def search(request):
+    searchitem = request.GET.get('searchitem')
+
+    if searchitem != '' and searchitem is not None:
+        products = Product.objects.filter( name__icontains = searchitem)
+    context = {'items':products, 'searchterm':searchitem}
+    return render(request, 'searchresults.html', context)
+

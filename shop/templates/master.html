@@ -22,7 +22,7 @@
      <nav class="  flex gap-8 ml-6 mt-4 p-4 items-center">
         <a href="/"> Home </a>
         <a href=""> Categories</a>
-        <form action="" class=" ">
+        <form action="{% url 'search' %}" class=" " method="get">
             <input  type="text" name="searchitem" id="" placeholder=" Search here "
               class=" border-2 p-2 hover:border-slate-600 rounded-full">
             <button type="submit" class="self-center ml-1 bg-slate-200 px-3 py-2 rounded-full hover:bg-slate-300  "> 
@@ -59,9 +59,9 @@
     </div>
     {% endblock %}
    
-    <footer class=" mx-auto bg-slate-600">
-            <div><span> Conditions of sale </span> <span> Privacy notice</span></div>
-            <p> SnapMart limited.  </p> 
+    <footer class="text-center text-sm text-slate-300 py-3 mt-3 bg-slate-600 ">
+            <div class=" flex gap-4 mx-auto justify-center my-2"><span> Conditions of sale </span> <span> Privacy notice</span></div>
+            <p> &#169; SnapMart limited.  </p> 
     </footer>
     
 </body>
