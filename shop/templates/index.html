@@ -26,4 +26,20 @@
             </div>
         {% endfor %}
     </div>
+    <div class="pagenav my-3 mx-auto flex gap-4 *:p-1 ">
+        {% if items.has_previous %}
+        
+            <a class="bg-slate-300 rounded" href="?page=1"> &laquo; </a>
+            <a class="bg-slate-300 rounded" href="?page={{items.previous_page_number}}"> prev </a>
+        {% endif %}
+        <p> Page {{items.number}} of {{items.paginator.num_pages}}</p>
+
+        {% if items.has_next %}
+
+            <a class="bg-slate-300 rounded" href="?page={{items.next_page_number}}"> next </a>
+            <a class="bg-slate-300 rounded" href="?page={{items.paginator.num_pages}}"> last </a>
+        {% endif %}
+        
+    </div>
+   
 {% endblock %}

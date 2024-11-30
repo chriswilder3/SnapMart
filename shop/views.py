@@ -1,11 +1,20 @@
 from django.shortcuts import render,redirect
 
 from .models import Product
+
+from django.core.paginator import Paginator
 # Create your views here.
 
 def home(request):
     products = Product.objects.all()
-    context ={ 'items': products } # In template it will easy
+
+    paginator = Paginator(products,8)
+    # Page no 
+    page_num = request.GET.get('page')
+
+    page_obj = paginator.get_page(page_num)
+    
+    context ={ 'items': page_obj } # In template it will easy
                                 # to remember as items
 
     return render( request, 'index.html', context)
@@ -15,8 +24,13 @@ def search(request):
 
     if searchitem != '' and searchitem is not None:
         products = Product.objects.filter( name__icontains = searchitem)
+    
         if products.exists():
-            context = {'items':products, 'searchterm':searchitem,'isSearchValid':True,'resultFound':True}
+            paginator = Paginator(products,4)
+            page_num = request.GET.get('page') 
+            page_obj = paginator.get_page(page_num)
+
+            context = {'items':page_obj, 'searchterm':searchitem,'isSearchValid':True,'resultFound':True}
         else:
             context = {'searchterm':searchitem,'isSearchValid':True,'resultFound':False}
     else:
