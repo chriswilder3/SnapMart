@@ -2,7 +2,7 @@
 
 {% block content %}
     <h3 class="ml-8 "> Search results for "{{searchterm}}" </h3>
-    
+
     {% if isSearchValid and resultFound  %}
 
         <div class="ProductList md:grid grid-cols-4 justify-around
@@ -24,15 +24,15 @@
         <div class="pagenav my-3 mx-auto flex gap-4 *:p-1 ">
             {% if items.has_previous %}
             
-                <a class="bg-slate-300 rounded" href="?page=1"> &laquo; </a>
-                <a class="bg-slate-300 rounded" href="?page={{items.previous_page_number}}"> prev </a>
+                <a class="bg-slate-300 rounded" href="?page=1&searchitem={{searchterm}}"> &laquo; </a>
+                <a class="bg-slate-300 rounded" href="?page={{items.previous_page_number}}&searchitem={{searchterm}}"> prev </a>
             {% endif %}
             <p> Page {{items.number}} of {{items.paginator.num_pages}}</p>
 
             {% if items.has_next %}
 
-                <a class="bg-slate-300 rounded" href="?page={{items.next_page_number}}"> next </a>
-                <a class="bg-slate-300 rounded" href="?page={{items.paginator.num_pages}}"> last </a>
+                <a class="bg-slate-300 rounded" href="?page={{items.next_page_number}}&searchitem={{searchterm}}"> next </a>
+                <a class="bg-slate-300 rounded" href="?page={{items.paginator.num_pages}}&searchitem={{searchterm}}"> &raquo; </a>
             {% endif %}
         </div>
 

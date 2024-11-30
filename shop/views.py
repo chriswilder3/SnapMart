@@ -19,6 +19,7 @@ def home(request):
 
     return render( request, 'index.html', context)
 
+#-----------------Search Result page
 def search(request):
     searchitem = request.GET.get('searchitem')
 
@@ -36,5 +37,16 @@ def search(request):
     else:
         # Invalid search
         context = { 'searchterm':searchitem,'isSearchValid':False}
+    
+    # V.IMP : Make sure the page nav buttons also return searchitem again back
+    # along with page. 
+    # ex : href="?page={{items.previous_page_number}}&searchitem={{searchterm}}"
+    # Why?
+    # Becase these buttons are links hence they make GET requests and if they
+    # dont sent searchitem along with them, it will trigger invalid searchitem
+    # ifelse case above.
+
     return render(request, 'searchresults.html', context)
+
+# -----------Product detail view
 
