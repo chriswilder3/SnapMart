@@ -1,11 +1,12 @@
 {% extends 'master.html' %}
 {% block content %}
-    <script>
-        // First Thing We will do is send the cart to backend (django view)
-        const cart = window.localStorage.getItem('cart')
-        
+    
 
-    </script>
+    <!-- Note that by now, User would have clicked on the cart btn which 
+    leads to execution of its related script at the end of master.html
+    Then the view will get the value of cart in the localStorage, which
+    processes it and sends corresponding data here. -->
+
     <h3 class=" text-3xl py-2 my-2 mx-auto text-sky-500 font-semibold">
         Shopping Cart
     </h3>

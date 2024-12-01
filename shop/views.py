@@ -3,6 +3,9 @@ from django.shortcuts import render,redirect
 from .models import Product
 
 from django.core.paginator import Paginator
+
+import json
+
 # Create your views here.
 
 def home(request):
@@ -66,16 +69,28 @@ def cart_view(request):
     # This is the view that passes information of all elements in the cart
     # to show in the cartview template.
 
-    products = Product.objects.all()
-    context ={
-        'items':products,
-    }
-    # Notice that we passed everything, but in template 
-    # We list those items as cards, which equate to id in the cart 
-    # of localStorage.
-
-    # Further We need to optimize this, such that we receive the
+    # Further We optimized this, such that we receive the
     # cart elemts here directly and fetch them Here.
+
+    cartData = request.POST.get('cartData')
+    cartData = json.loads(cartData)
+    # print(cartData)
+
+    # Now for all the keys in the above object, we get corrsponding items
+
+    items = Product.objects.none()
+    # This creates an empty queryset to which we can append specific 
+    # cart products.
+    # Learn more on queryset objects here : https://chatgpt.com/share/674ccec2-24ec-8002-967d-3eebcd196b2c
+    # and through ke
+
+    for key,val in cartData.items():
+        print(key, val)
+        prod = Product.objects.get(id = key)
+        items = items | prod  # This combines items queryset with prod each time
+    context = {
+        'items' : items,
+    }
     return render(request, 'cartview.html',context)
 
     

@@ -29,6 +29,7 @@
         
         <!-- Search form takes up available space -->
         <form action="{% url 'search' %}" class="flex-grow mx-auto" method="get">
+            
             <input type="text" name="searchitem" placeholder=" Search here "
                 class="border-2 p-2 px-8 bg-slate-200 border-slate-400 
                 transition delay-60 hover:border-slate-600 hover:bg-white rounded-full">
@@ -38,12 +39,16 @@
         </form>
         
         <!-- Cart with position adjustment -->
-        <a href="{% url 'cartview' %}" class="relative text-slate-600 -top-1.5 hover:text-slate-900 hover:scale-105 text-lg">
-            <i class="fa fa-shopping-cart text-4xl"> </i> Cart
-            <div class="nav-cart-counter absolute w-5 h-5 text-sm text-white bg-red-400 
-                        items-center rounded-full text-center -top-1 left-2"></div>
-        </a>
-        
+        <form action="/cartview" method="post">
+            {% csrf_token %} 
+            <input type="hidden" name="cartData" class="cart-data">
+            <button type="submit" class="cartbtn relative text-slate-600 -top-1.5 hover:text-slate-900 hover:scale-105 text-lg">
+                <i class="fa fa-shopping-cart text-4xl"> </i> Cart
+                <div class="nav-cart-counter absolute w-5 h-5 text-sm text-white bg-red-400 
+                            items-center rounded-full text-center -top-1 left-2"></div>
+            </button>
+        </form>
+
         <!-- Login link aligned to the right -->
         <a href="" class="self-center md:ml-auto mr-8 text-slate-600 hover:text-slate-900 hover:scale-105 text-lg">
             Login
@@ -61,12 +66,28 @@
     <script>
         // As said before its necessary that cartcount is shown even when as soon as
         // any page loads. But make sure its not null before showing.
+        
         const newCount = localStorage.getItem('cartCount')
 
         if(newCount){
             const navCartCounter = document.querySelector('.nav-cart-counter')
             navCartCounter.textContent = `${newCount}`
         }
+
+        // When cart btn is clicked, send the cart in localStorage to django
+        // at cart_view
+        // What I do is make a form for cartbtn with hidden input tag
+        // Whose value I set here. The value will sent to cartview in
+        // django with post request.
+
+        const cartbtn = document.querySelector('.cart-data')
+        const cartData = localStorage.getItem('cart') 
+        
+        cartbtn.value = JSON.stringify(JSON.parse(cartData))
+        // Make sure to do both parse() followed by stringify() otherwise
+        // It wont work
+        
+
     </script>
 
     
