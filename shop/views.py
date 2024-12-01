@@ -75,19 +75,20 @@ def cart_view(request):
     cartData = request.POST.get('cartData')
     cartData = json.loads(cartData)
     # print(cartData)
-
+    print(cartData)
     # Now for all the keys in the above object, we get corrsponding items
 
     items = Product.objects.none()
     # This creates an empty queryset to which we can append specific 
     # cart products.
     # Learn more on queryset objects here : https://chatgpt.com/share/674ccec2-24ec-8002-967d-3eebcd196b2c
-    # and through ke
+    # and through ChatGPT PDF : Queryset IMP operations.pdf
 
     for key,val in cartData.items():
-        print(key, val)
-        prod = Product.objects.get(id = key)
+        # print(key, val)
+        prod = Product.objects.filter(id = key)
         items = items | prod  # This combines items queryset with prod each time
+    # print(items)
     context = {
         'items' : items,
     }

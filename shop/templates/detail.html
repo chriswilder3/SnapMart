@@ -42,96 +42,73 @@
     Learn more Here : https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage -->
     <script>
         // Note that I have set the value of the addtocart btn as item id
-        cartbtn = document.querySelector('.addtocart')
-        cartbtn.addEventListener('click', function(){
-            itemId = cartbtn.value
-            // console.log(localStorage.getItem(21));
-            // In the cart We will store item Id and amount as key val pair
-            // if itemId already exists, we will increase the count
-            // otherwise add new cnt 1.
 
-            // But we dont want itemId as as key of localStorage itself
-            // Why? what if we store orders / other things also. Then
-            // We cant differentiate. Hence We will make a dict/ JS object
-            // store as val inside localStorage with cart as key.
+        document.addEventListener('DOMContentLoaded', function() {
+            let cartbtn = document.querySelector('.addtocart');
+            if (cartbtn) {
+                    cartbtn.addEventListener('click', function(){
+                        let itemId = this.value;
+                        
+                        if (!itemId) {
+                            console.error('Item ID is null or undefined');
+                            return;
+                        }
 
-            let cart = localStorage.getItem('cart')
-                
+                        let cart = localStorage.getItem('cart');
+                        
+                        if(cart) {
+                            cart = JSON.parse(cart);
 
-            if(cart){
+                            if(itemId in cart) {
+                                cart[itemId] = cart[itemId] + 1;
+                            } else {
+                                cart[itemId] = 1;
+                            }
+                        } else {
+                            cart = {[itemId]: 1};
+                        }
 
-                // First note that localStorage stores JSON (string form)
-                // Hence convert it to JS object using parse
-                cart = JSON.parse(cart)
+                        localStorage.setItem('cart', JSON.stringify(cart));
+                        console.log(`cart: ${localStorage.getItem('cart')}`);
 
-                // Now if the cart has elements, We also need to check that
-                // current itemId exists in it
-                if( itemId in cart){
-                    // We increment the count of that item
-                    cart[itemId] = cart[itemId]+1
-                   
+
+                                    // Also note that Its inefficient calculate total count pf
+                        // cart items dynamically, instead store and update cartCount here
+
+                        const cartCount = Number(localStorage.getItem('cartCount'))
+                            // Again remeber its JSON string, convert it to number first
+                        if(cartCount){
+                            localStorage.setItem('cartCount', cartCount+1)
+                        }else{
+                            localStorage.setItem('cartCount', 1)
+                        }
+                        console.log('count',localStorage.getItem('cartCount'));
+                        // Now that this cart is updated, We need to display the same 
+                        // in navbar. But note that instead of updating it in the master template
+                        // We can update here, Since its extended to this template as well
+                        // But its necessary that this count is shown even when as soon as
+                        // any page loads. Hence We will do it (without increment ) outside
+                        // at the master template as well( since it should load on every site)
+
+                        const navCartCounter = document.querySelector('.nav-cart-counter')
+                        const newCount = localStorage.getItem('cartCount')
+
+                        navCartCounter.textContent = `${newCount}`
+
+                        // Also Optionally we can alert the users that new element was added
+
+                        alert('Hey, new item has been added the Cart!')
+
+                    });
+                } else {
+                    console.error('Cart button not found.');
                 }
-                else{
-                    // otherwise add this new item to existing
-                    cart[itemId] = 1;
-                    
-                }
-            }else{
-                cart = JSON.parse(cart)
-                // create new cart with single new item.
+            });
 
-                // We can do terrible mistake here.
-                // In JS, when you define an object and use a key without brackets
-                // [], the key is interpreted as a literal string. 
 
-                // For example: 
-                // const itemId = "123";
-                // const cart= { itemId: 1 }; 
-                // // This results in { "itemId": 1 }, not { "123": 1 }
-                
-                // Hence use [] to interpret it as variable val.
-                // Remember concept of symbol and how its used as key.
-                cart =  {[itemId]:1}
-
-                // Or u could simply write cart[itemId]=1
-            }
             
-            // Now the updated cart must be saved back to the localStorage
-            // Again convert it to JSON string
-            cart = JSON.stringify(cart)
-
-            localStorage.setItem('cart', cart);
-
-            console.log(` cart : ${localStorage.getItem('cart')}`);
-
-            // Also note that Its inefficient calculate total count pf
-            // cart items dynamically, instead store and update cartCount here
-
-            const cartCount = Number(localStorage.getItem('cartCount'))
-                // Again remeber its JSON string, convert it to number first
-            if(cartCount){
-                localStorage.setItem('cartCount', cartCount+1)
-            }else{
-                localStorage.setItem('cartCount', 1)
-            }
-            console.log('count',localStorage.getItem('cartCount'));
-            // Now that this cart is updated, We need to display the same 
-            // in navbar. But note that instead of updating it in the master template
-            // We can update here, Since its extended to this template as well
-            // But its necessary that this count is shown even when as soon as
-            // any page loads. Hence We will do it (without increment ) outside
-            // at the master template as well( since it should load on every site)
-
-            const navCartCounter = document.querySelector('.nav-cart-counter')
-            const newCount = localStorage.getItem('cartCount')
-
-            navCartCounter.textContent = `${newCount}`
-
-            // Also Optionally we can alert the users that new element was added
-
-            alert('Hey, new item has been added the Cart!')
             
-        })
+        
         
 
     </script>
