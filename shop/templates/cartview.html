@@ -1,0 +1,43 @@
+{% extends 'master.html' %}
+{% block content %}
+    <script>
+
+    </script>
+    <h3 class=" text-3xl py-2 my-2 mx-auto text-sky-500 font-semibold">
+        Shopping Cart
+    </h3>
+    
+    {% for item in items %}
+
+    
+    <div class="item-card border-2 border-slate-300 my-2  px-10 py-5 text-wrap font-medium rounded
+                    text-slate-600 mx-auto "> 
+                
+                <p class=" pb-4 "> in <span class="bg-slate-200 p-1 rounded">{{ item.category }}</span> </p>
+                <p class="px-2 line-through ml-1 text-sm text-gray-600 "> <i> &#36 {{ item.price }} </i> </p>
+                <p class="px-2 mb-2 text-green-500 text-lg font-semibold ">  &#36 {{ item.discount_price }}  </p>
+                
+                <div class="flex gap-5 *:shadow-md *:shadow-slate-300  ">
+                    <button type="button" value="{{item.id}}" class="addtocart bg-amber-300 p-2  px-3 rounded 
+                            transition delay-75 hover:bg-amber-400 hover:scale-105"> 
+                        Add to cart 
+                    </button>
+                    
+                    <a href="" class="bg-sky-400 text-white p-2  px-5 rounded 
+                            transition delay-75 hover:bg-sky-500 hover:scale-105" > 
+                        Buy Now 
+                    </a>
+                    <a href="" class="bg-red-400 text-white p-2  px-5 rounded 
+                            transition delay-75 hover:bg-red-500 hover:scale-105" > 
+                        Delete 
+                    </a>
+                </div>    
+                
+                
+    </div>
+    {% endfor %}
+    
+
+    
+
+{% endblock %}

@@ -59,3 +59,23 @@ def detail( request, id):
 
     # Create a detail.html now
     return render( request, 'detail.html', {'item':product})
+
+
+
+def cart_view(request):
+    # This is the view that passes information of all elements in the cart
+    # to show in the cartview template.
+
+    products = Product.objects.all()
+    context ={
+        'items':products,
+    }
+    # Notice that we passed everything, but in template 
+    # We list those items as cards, which equate to id in the cart 
+    # of localStorage.
+
+    # Further We need to optimize this, such that we receive the
+    # cart elemts here directly and fetch them Here.
+    return render(request, 'cartview.html',context)
+
+    
