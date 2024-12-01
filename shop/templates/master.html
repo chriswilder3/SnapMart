@@ -19,33 +19,44 @@
 </head>
 <body class="min-h-screen flex flex-col">
     <!-- bg-gradient-to-r from-pink-200 to-orange-200 p-5  -->
-     <nav class="  md:flex gap-10 ml-6 mt-4 p-4 items-center justify-evenly">
-        <a href="/" class="text-slate-600 hover:text-slate-900 hover:scale-105 text-lg"> 
-            Home 
+    <nav class="flex md:flex-row flex-col gap-10 ml-6 mt-4 p-4 items-center justify-between">
+        <a href="/" class="text-slate-600 hover:text-slate-900 hover:scale-105 text-lg">
+            Home
         </a>
-        <a href="" class="text-slate-600 hover:text-slate-900 hover:scale-105 text-lg"> 
+        <a href="" class="text-slate-600 hover:text-slate-900 hover:scale-105 text-lg">
             Categories
         </a>
-        <form action="{% url 'search' %}" class=" mx-auto" method="get">
-            <input  type="text" name="searchitem" id="" placeholder=" Search here "
-              class=" border-2 p-2 px-8 bg-slate-200 border-slate-400 
+        
+        <!-- Search form takes up available space -->
+        <form action="{% url 'search' %}" class="flex-grow mx-auto" method="get">
+            <input type="text" name="searchitem" placeholder=" Search here "
+                class="border-2 p-2 px-8 bg-slate-200 border-slate-400 
                 transition delay-60 hover:border-slate-600 hover:bg-white rounded-full">
-            <button type="submit" class="self-center ml-1 bg-slate-300 px-3 py-2 rounded-full hover:bg-slate-400  "> 
-               Search
+            <button type="submit" class="self-center ml-1 bg-slate-300 px-3 py-2 rounded-full hover:bg-slate-400">
+                Search
             </button>
         </form>
-        <a href="" class="relative text-slate-600 hover:text-slate-900 hover:scale-105 text-lg"> 
-            <i class="fa fa-shopping-cart text-4xl "> </i> Cart 
-            <div class="nav-cart-counter absolute w-5 h-5 text-sm text-white bg-red-400 items-center 
-                        rounded-full text-center -top-1 left-2 "></div>
+        
+        <!-- Cart with position adjustment -->
+        <a href="" class="relative text-slate-600 -top-1.5 hover:text-slate-900 hover:scale-105 text-lg">
+            <i class="fa fa-shopping-cart text-4xl"> </i> Cart
+            <div class="nav-cart-counter absolute w-5 h-5 text-sm text-white bg-red-400 
+                        items-center rounded-full text-center -top-1 left-2"></div>
         </a>
-        <a href="" class=" ml-auto mr-8 text-slate-600 hover:text-slate-900 hover:scale-105 text-lg">
+        
+        <!-- Login link aligned to the right -->
+        <a href="" class="self-center md:ml-auto mr-8 text-slate-600 hover:text-slate-900 hover:scale-105 text-lg">
             Login
         </a>
-     </nav>
+    </nav>
+    
     {% block content %}
     
     {% endblock %}
+    <footer class="mt-auto  text-center text-sm text-slate-300 py-3 bg-slate-600 ">
+        <div class=" flex gap-4 mx-auto justify-center my-2"><span> Conditions of sale </span> <span> Privacy notice</span></div>
+        <p> &#169; SnapMart limited.  </p> 
+    </footer>
    
     <script>
         // As said before its necessary that cartcount is shown even when as soon as
@@ -58,10 +69,7 @@
         }
     </script>
 
-    <footer class="mt-auto  text-center text-sm text-slate-300 py-3 bg-slate-600 ">
-            <div class=" flex gap-4 mx-auto justify-center my-2"><span> Conditions of sale </span> <span> Privacy notice</span></div>
-            <p> &#169; SnapMart limited.  </p> 
-    </footer>
+    
     
 </body>
 </html>
