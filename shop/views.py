@@ -91,7 +91,9 @@ def cart_view(request):
     # print(items)
     context = {
         'items' : items,
+        'cartCount': cartData,
     }
+    print( type(cartData))
     return render(request, 'cartview.html',context)
 
     

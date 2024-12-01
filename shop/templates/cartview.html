@@ -11,6 +11,7 @@
         Shopping Cart
     </h3>
     
+    
     {% for item in items %}
 
     
@@ -22,17 +23,28 @@
                     <p class="self pb-4 "> in <span class="bg-slate-200 p-1 rounded">{{ item.category }}</span> </p>
                     <p class="px-2 line-through ml-1 text-sm text-gray-600 "> <i> &#36 {{ item.price }} </i> </p>
                     <p class="px-2 mb-2 text-green-500 text-lg font-semibold ">  &#36 {{ item.discount_price }}  </p>
-                
+                    
+                    
+
                     <div class="flex gap-5 *:shadow-md *:shadow-slate-300  ">
                         
                         
                             <label class="self-center " for="quantity"> </label>
                             <select class="self-center p-1 border-1 border-slate-700 " name="quantity" id="quantity" >
-                                <option value="1"> Quantity : 1</option>
-                                <option value="1"> Quantity : 2</option>
-                                <option value="1"> Quantity : 3</option>
-                            </select>
+                                {% for key, value in cartCount.items %}
+                                    {% if key == item.id|stringformat:"s" %}   
+                                                        <!-- Convert id to string for compare -->
 
+                                        {% for i in '1'|times.value %}
+                                                    <!-- The times filter generates a range of numbers from 1 to the specified value. -->
+                                            <option value="{{i}}"> Quantity : {{i}} </option>
+                                        {% endfor %}   
+                                    {% endif %}
+                                    
+                                {% endfor %}
+                                
+                            </select>
+                            
                             <button type="submit" value="{{item.id}}" class="addtocart bg-amber-200 p-2  px-2 rounded 
                                     transition delay-75 hover:bg-amber-300 hover:scale-105"> 
                                 Change amount
