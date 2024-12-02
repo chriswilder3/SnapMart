@@ -4,4 +4,5 @@ register = template.Library()
 
 @register.filter(name='times')
 def times(number):
-    return range(1, number + 1)
+    # Changed later to serve 10 option in select tag.
+    return range(1, 10 + 1)

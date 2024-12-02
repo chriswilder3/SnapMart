@@ -29,8 +29,12 @@
 
                     <div class="flex gap-5  ">
                         
-                         <!-- When The amount is changed, Not only does cart in 
-                         localStorage gets updated, but also backend -->
+                         <!-- When The amount is changed, only does cart in 
+                         localStorage gets updated, not backend, since we have set min to 1
+                         To make it 0, you have to press the delete option itself. -->
+
+                         <!-- The select option will have quantity upto 9, if more needs to be entered
+                         the select will turn into input tag  -->
 
                          <form action="" method="get" class=" shadow-none">  
                             {% csrf_token %}
@@ -46,12 +50,21 @@
                                                     <option value="{{ i }},{{item.id}}" class="text-slate-600"> Quantity: {{ i }} </option>
                                                 {% endif %}
                                         {% endfor %}
+                                             
+
                                     {% endif %}
                                 {% endfor %}
+                                <option value="more" class="text-slate-600"> More... </option>
                             </select>
                           
-                            
-                            <button type="submit" value="" class="change-amount-btn bg-amber-200 p-2 ml-1 px-2 rounded 
+                            <input type="number" 
+                                class="hidden change-amount-input self-center p-1 border-1 border-slate-700" 
+                                name="custom_quantity" 
+                                id="custom_quantity" 
+                                min="10"
+                                placeholder="Enter quantity"
+                            />
+                            <button type="button" class="change-amount-btn bg-amber-200 p-2 ml-1 px-2 rounded 
                                     transition delay-75 hover:bg-amber-300 hover:scale-105 shadow-md shadow-slate-300 "> 
                                 Change amount
                             </button>
@@ -74,20 +87,78 @@
     {% endfor %}
     
     <script>
-        const changeCartBtn = document.querySelector('.change-amount-btn')
-        changeCartBtn.addEventListener( 'click', function(e){
-            e.preventDefault()
-            const changeCartOption  = document.querySelector('.change-amount-val')
-            let data = changeCartOption.value
-            data = data.split(',')
-            const itemId = data[1]
-            const itemCount = data[0]
 
-            console.log(localStorage.getItem('cart'));
+        // We will change the 
+    document.addEventListener('DOMContentLoaded', function () {
+        const selectElement = document.querySelector('.change-amount-val');
+        const inputElement = document.querySelector('.change-amount-input');
+        const changeCartBtn = document.querySelector('.change-amount-btn');
 
-            // Note that We need to change the 
-            
-        })
+        // Toggle between select and input
+        selectElement.addEventListener('change', function () {
+            if (selectElement.value === 'more') {
+                inputElement.classList.remove('hidden'); // Show input
+                selectElement.classList.add('hidden'); // Hide select
+                inputElement.focus(); // Focus input
+            }
+        });
+
+        inputElement.addEventListener('blur', function () {
+            const customValue = inputElement.value;
+
+            // If input is invalid or empty, revert to select
+            if (customValue === '' || customValue < 10) {
+                inputElement.classList.add('hidden'); // Hide input
+                selectElement.classList.remove('hidden'); // Show select
+                selectElement.value = ''; // Reset select value
+            }
+        });
+
+        // Update cart on button click
+        changeCartBtn.addEventListener('click', function (e) {
+            e.preventDefault();
+
+            let itemNewCount;
+            const itemId = selectElement.value.split(',')[1] || inputElement.dataset.itemId;
+
+            // Determine the new item count (from input or select)
+            if (!inputElement.classList.contains('hidden')) {
+                itemNewCount = Number(inputElement.value);
+                if (itemNewCount < 10 || isNaN(itemNewCount)) {
+                    alert('Please enter a valid quantity (10 or more).');
+                    return;
+                }
+            } else {
+                const data = selectElement.value.split(',');
+                itemNewCount = Number(data[0]);
+            }
+
+            // Update localStorage cart
+            let cart = localStorage.getItem('cart');
+            cart = JSON.parse(cart);
+
+            const itemOldCount = Number(cart[itemId]); // Previous item count
+            cart[itemId] = itemNewCount; // Update cart
+            localStorage.setItem('cart', JSON.stringify(cart));
+
+            console.log(cart);
+
+            // Update total cart count on navigation
+            const totalOldCount = Number(localStorage.getItem('cartCount'));
+            if (totalOldCount) {
+                const navCartCounter = document.querySelector('.nav-cart-counter');
+                navCartCounter.textContent = `${totalOldCount + itemNewCount - itemOldCount}`;
+            }
+
+            // Reset UI (optional)
+            if (!inputElement.classList.contains('hidden')) {
+                inputElement.value = ''; // Clear input
+                inputElement.classList.add('hidden'); // Hide input
+                selectElement.classList.remove('hidden'); // Show select
+                }
+        });
+    });
+
     </script>
 
     
