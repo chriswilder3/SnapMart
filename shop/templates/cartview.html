@@ -1,4 +1,5 @@
 {% extends 'master.html' %}
+{% load custom_filters %}
 {% block content %}
     
 
@@ -26,37 +27,42 @@
                     
                     
 
-                    <div class="flex gap-5 *:shadow-md *:shadow-slate-300  ">
+                    <div class="flex gap-5  ">
                         
-                        
-                            <label class="self-center " for="quantity"> </label>
-                            <select class="self-center p-1 border-1 border-slate-700 " name="quantity" id="quantity" >
-                                {% for key, value in cartCount.items %}
-                                    {% if key == item.id|stringformat:"s" %}   
-                                                        <!-- Convert id to string for compare -->
+                         <!-- When The amount is changed, Not only does cart in 
+                         localStorage gets updated, but also backend -->
 
-                                        {% for i in '1'|times.value %}
-                                                    <!-- The times filter generates a range of numbers from 1 to the specified value. -->
-                                            <option value="{{i}}"> Quantity : {{i}} </option>
-                                        {% endfor %}   
+                         <form action="" method="get" class=" shadow-none">  
+                            {% csrf_token %}
+                            <label class="self-center " for="quantity"> </label>
+                            <select class="change-amount-val self-center p-1 border-1 border-slate-700" name="quantity" id="quantity">
+                                {% for key, value in cartCount.items %}
+                                    {% if key == item.id|stringformat:"s" %}
+                                        
+                                        {% for i in value|times %}
+                                                {% if  i == value%}
+                                                    <option value="{{ i }},{{item.id}}" selected class="font-semibold"> <span > Quantity: {{ i }} </span>  </option>
+                                                {% else %}
+                                                    <option value="{{ i }},{{item.id}}" class="text-slate-600"> Quantity: {{ i }} </option>
+                                                {% endif %}
+                                        {% endfor %}
                                     {% endif %}
-                                    
                                 {% endfor %}
-                                
                             </select>
+                          
                             
-                            <button type="submit" value="{{item.id}}" class="addtocart bg-amber-200 p-2  px-2 rounded 
-                                    transition delay-75 hover:bg-amber-300 hover:scale-105"> 
+                            <button type="submit" value="" class="change-amount-btn bg-amber-200 p-2 ml-1 px-2 rounded 
+                                    transition delay-75 hover:bg-amber-300 hover:scale-105 shadow-md shadow-slate-300 "> 
                                 Change amount
                             </button>
-                        
+                        </form>  
 
                         <a href="" class="bg-sky-400 text-white p-2  px-5 rounded 
-                                transition delay-75 hover:bg-sky-500 hover:scale-105" > 
+                                transition delay-75 hover:bg-sky-500 hover:scale-105 shadow-md shadow-slate-300 " > 
                             Buy Now 
                         </a>
                         <a href="" class="bg-red-400 text-white p-2  px-5 rounded 
-                                transition delay-75 hover:bg-red-500 hover:scale-105" > 
+                                transition delay-75 hover:bg-red-500 hover:scale-105 shadow-md shadow-slate-300 " > 
                             Delete 
                         </a>
                     </div>
@@ -67,6 +73,22 @@
     </div>
     {% endfor %}
     
+    <script>
+        const changeCartBtn = document.querySelector('.change-amount-btn')
+        changeCartBtn.addEventListener( 'click', function(e){
+            e.preventDefault()
+            const changeCartOption  = document.querySelector('.change-amount-val')
+            let data = changeCartOption.value
+            data = data.split(',')
+            const itemId = data[1]
+            const itemCount = data[0]
+
+            console.log(localStorage.getItem('cart'));
+
+            // Note that We need to change the 
+            
+        })
+    </script>
 
     
 
