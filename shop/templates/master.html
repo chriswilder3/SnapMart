@@ -85,7 +85,25 @@
             if (cartbtn && cartData) {
                 cartbtn.value = JSON.stringify(JSON.parse(cartData));
             }
+
+            document.addEventListener('cartUpdated', function(){
+                const upDatedCount = localStorage.getItem('cartCount')
+                const navCartCounter = document.querySelector('.nav-cart-counter')
+                navCartCounter.textContent= `${upDatedCount}`
+                
+                const cartbtn = document.querySelector('.cart-data');
+                const cartData = localStorage.getItem('cart');
+
+                if (cartbtn && cartData) {
+                    cartbtn.value = JSON.stringify(JSON.parse(cartData));
+                }
+            })
         });
+            // document.addEventListener('cartUpdated', function(){
+            //     const upDatedCount = localStorage.getItem('cartCount')
+            //     const navCartCounter = document.querySelector('.nav-cart-counter')
+            //     navCartCounter.textContent= `${upDatedCount}`
+            // })
     </script>
     {% comment %} <script>
         // As said before its necessary that cartcount is shown even when as soon as

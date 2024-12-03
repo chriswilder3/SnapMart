@@ -33,7 +33,7 @@
                     
                     
 
-                    <div class="flex gap-5  ">
+                    <div class="md:flex gap-5  ">
                         
                          <!-- When The amount is changed, only does cart in 
                          localStorage gets updated, not backend, since we have set min to 1
@@ -126,7 +126,7 @@
 
             let itemNewCount;
             const itemId = selectElement.value.split(',')[1] || inputElement.dataset.itemId;
-
+            console.log('item : ',itemId);
             // Determine the new item count (from input or select)
             if (!inputElement.classList.contains('hidden')) {
                 itemNewCount = Number(inputElement.value);
@@ -137,6 +137,8 @@
             } else {
                 const data = selectElement.value.split(',');
                 itemNewCount = Number(data[0]);
+                console.log('itemNewCount : ',itemNewCount);
+                
             }
 
             // Update localStorage cart
@@ -146,28 +148,33 @@
             const itemOldCount = Number(cart[itemId]); // Previous item count
             cart[itemId] = itemNewCount; // Update cart
             localStorage.setItem('cart', JSON.stringify(cart));
+
+            console.log('cart : ', cart);
             // Wel also need to set the value of the hidden input
             // in navbr which resides along with cartbtn
 
             const cartbtn = document.querySelector('.cart-data');
             
             if (cartbtn) {
-                cartbtn.value = JSON.stringify(JSON.parse(cart));
+                cartbtn.value = JSON.stringify(cart);
             }
             
 
             // Update total cart count on navigation
             const totalOldCount = Number(localStorage.getItem('cartCount'));
 
-            console.log(totalOldCount);
+            
             
             if (totalOldCount) {
-                const navCartCounter = document.querySelector('.nav-cart-counter');
-                navCartCounter.textContent = `${totalOldCount + itemNewCount - itemOldCount}`;
-                localStorage.setItem('cartCount',(totalOldCount + itemNewCount - itemOldCount));
-
+                const totalNewCount = totalOldCount + itemNewCount - itemOldCount
+                localStorage.setItem('cartCount',(totalNewCount));
+                
+                // Dispatch custom event to update navbar cart count 
+                const event = new CustomEvent('cartUpdated'); 
+                document.dispatchEvent(event);
+                console.log(`${totalNewCount}`);
             }   
-            console.log(`${totalOldCount + itemNewCount - itemOldCount}`);
+            
 
             // Reset UI (optional)
             if (!inputElement.classList.contains('hidden')) {
