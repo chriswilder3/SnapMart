@@ -135,7 +135,7 @@
 
                     let catList = ``
                     categories.forEach(element => {
-                        catList += ` <a> <p class='p-2 hover:scale-105 hover:text-sky-600'> ${element} </p> </a> <hr>`
+                        catList += ` <a href="/categories/${element}?page=1"> <p class='p-2 hover:scale-105 hover:text-sky-600'> ${element} </p> </a> <hr>`
                     });
                     categoriesDropdown.innerHTML = catList;
                 } 

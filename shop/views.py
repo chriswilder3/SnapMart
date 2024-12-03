@@ -108,8 +108,11 @@ def cart_view(request):
 
     
 def master( request):
+    # This view is used to send categories to master on any page
+    # It send all categories as httpreonse to a JS script on master page
+
     categories = Product.objects.all().values_list('category' ,flat = True)
-    categories = list(set(categories))
+    categories = list(set(categories)) # get unique values
     # get unique values of list
     print(categories)
     
@@ -118,3 +121,15 @@ def master( request):
     }
     # return HttpResponse(json.dumps(context))
     return HttpResponse(json.dumps(context))
+
+def categories( request, category):
+
+    products = Product.objects.filter(category = category)
+
+    paginator = Paginator(products,8)
+    page_num = request.GET.get('page')
+    page_obj = get_page(page_num)
+
+    context ={ 'items': page_obj } 
+
+    return render( request, 'categories.html', context)
