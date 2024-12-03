@@ -1,5 +1,7 @@
 from django.shortcuts import render,redirect
 
+from django.http import HttpResponse
+
 from .models import Product
 
 from django.core.paginator import Paginator
@@ -105,3 +107,14 @@ def cart_view(request):
     return render(request, 'cartview.html',context)
 
     
+def master( request):
+    categories = Product.objects.all().values_list('category' ,flat = True)
+    categories = list(set(categories))
+    # get unique values of list
+    print(categories)
+    
+    context = {
+        'categories' :categories,
+    }
+    # return HttpResponse(json.dumps(context))
+    return HttpResponse(json.dumps(context))

@@ -23,10 +23,13 @@
         <a href="/" class="text-slate-600 hover:text-slate-900 hover:scale-105 text-lg">
             Home
         </a>
-        <a href="" class="text-slate-600 hover:text-slate-900 hover:scale-105 text-lg">
-            Categories
+        <a href="" class="categories-btn p-2 text-slate-600 hover:text-slate-900 hover:scale-105 hover:bg-slate-200 text-lg relative">
+            Categories   
+            <div class="hidden absolute categories-dropdown justify-center z-10 w-32 bg-slate-200 text-sky-500 p-3 flex-col">
+                
+                
+            </div>
         </a>
-        
         <!-- Search form takes up available space -->
         <form action="{% url 'search' %}" class="flex-grow mx-auto" method="get">
             
@@ -54,6 +57,8 @@
             Login
         </a>
     </nav>
+
+    
     
     {% block content %}
     
@@ -98,39 +103,55 @@
                     cartbtn.value = JSON.stringify(JSON.parse(cartData));
                 }
             })
+            
+        // We need to display the dropdown of categories when we hover over it
+            
+            const categoriesBtn = document.querySelector('.categories-btn')
+            const categoriesDropdown = document.querySelector('.categories-dropdown')
+            
+            categoriesBtn.addEventListener('mouseenter', function(){
+                categoriesDropdown.classList.remove('hidden')
+            })
+            categoriesBtn.addEventListener('mouseleave', function(){
+    
+                categoriesDropdown.classList.add('hidden')
+            })
+
+        // Below is a code that will fetch categories from django view
+            
+            async function getData() {
+                const url = "/master";
+                try {
+                    const response = await fetch(url);
+                    if (!response.ok) {
+                        throw new Error(`Response status: ${response.status}`);
+                    }
+                    const data = await response.json();
+                    console.log('data returned : ', data);
+                    // Note that returned data is object, Hence access the list
+                    // By using .categories (Remember from view)
+                    const categories = data.categories;
+
+                    let catList = ``
+                    categories.forEach(element => {
+                        catList += ` <a> <p class='p-2 text-sm font-semibold hover:scale-105'> ${element} </p> </a>`
+                    });
+                    categoriesDropdown.innerHTML = catList;
+                } 
+                catch (error) {
+                    console.error(error.message);
+                }
+            }
+            getData();
+
         });
-            // document.addEventListener('cartUpdated', function(){
-            //     const upDatedCount = localStorage.getItem('cartCount')
-            //     const navCartCounter = document.querySelector('.nav-cart-counter')
-            //     navCartCounter.textContent= `${upDatedCount}`
-            // })
+            
+
+
+        
     </script>
-    {% comment %} <script>
-        // As said before its necessary that cartcount is shown even when as soon as
-        // any page loads. But make sure its not null before showing.
 
-        const newCount = localStorage.getItem('cartCount')
-
-        if(newCount){
-            const navCartCounter = document.querySelector('.nav-cart-counter')
-            navCartCounter.textContent = `${newCount}`
-        }
-
-        // When cart btn is clicked, send the cart in localStorage to django
-        // at cart_view
-        // What I do is make a form for cartbtn with hidden input tag
-        // Whose value I set here. The value will sent to cartview in
-        // django with post request.
-
-        const cartbtn = document.querySelector('.cart-data')
-        const cartData = localStorage.getItem('cart') 
-        
-        cartbtn.value = JSON.stringify(JSON.parse(cartData))
-        // Make sure to do both parse() followed by stringify() otherwise
-        // It wont work
-        
-
-    </script> {% endcomment %}
+    
 
     
     
