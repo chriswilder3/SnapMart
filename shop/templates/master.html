@@ -23,9 +23,10 @@
         <a href="/" class="text-slate-600 hover:text-slate-900 hover:scale-105 text-lg">
             Home
         </a>
-        <a href="" class="categories-btn p-2 text-slate-600 hover:text-slate-900 hover:scale-105 hover:bg-slate-200 text-lg relative">
+        <a href="" class="categories-btn p-1 text-slate-600 hover:text-slate-900 hover:scale-105  text-lg relative">
             Categories   
-            <div class="hidden absolute categories-dropdown justify-center z-10 w-32 bg-slate-200 text-sky-500 p-3 flex-col">
+            <div class="hidden absolute -left-2 categories-dropdown justify-center z-10 w-32 bg-slate-200 text-sky-500 p-3 flex-col shadow-lg
+                                    text-base font-semibold text-wrap rounded ">
                 
                 
             </div>
@@ -134,7 +135,7 @@
 
                     let catList = ``
                     categories.forEach(element => {
-                        catList += ` <a> <p class='p-2 text-sm font-semibold hover:scale-105'> ${element} </p> </a>`
+                        catList += ` <a> <p class='p-2 hover:scale-105 hover:text-sky-600'> ${element} </p> </a> <hr>`
                     });
                     categoriesDropdown.innerHTML = catList;
                 } 
