@@ -126,10 +126,11 @@ def categories( request, category):
 
     products = Product.objects.filter(category = category)
 
-    paginator = Paginator(products,8)
+    paginator = Paginator(products,4)
     page_num = request.GET.get('page')
-    page_obj = get_page(page_num)
+    page_obj = paginator.get_page(page_num)
 
-    context ={ 'items': page_obj } 
-
+    context ={ 'items': page_obj,
+                'category':category,
+            } 
     return render( request, 'categories.html', context)
