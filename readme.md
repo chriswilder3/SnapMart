@@ -20,7 +20,8 @@ This project is an e-commerce web application built using Django and JavaScript.
 1. Clone the repository:
    ```sh
    git clone https://github.com/yourusername/yourrepository.git
-``` 
+   ```
+   
 ### Usage
 - Access the home page to view all products.
 - Use the search bar to find specific products.
