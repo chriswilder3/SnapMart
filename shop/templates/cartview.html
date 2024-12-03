@@ -64,12 +64,14 @@
                             </select>
                           
                             <input type="number" 
-                                class="hidden change-amount-input self-center p-1 border-1 border-slate-700" 
+                                class="hidden change-amount-input self-center py-1 border-1 border-slate-700" 
                                 name="custom_quantity" 
                                 id="custom_quantity" 
                                 min="11"
                                 placeholder="Enter quantity"
+                                item-id = "{{item.id}}"
                             />
+                            <!-- input has  custom attribute item_id -->
                             <button type="button" class="change-amount-btn bg-amber-200 p-2 ml-1 px-2 rounded 
                                     transition delay-75 hover:bg-amber-300 hover:scale-105 shadow-md shadow-slate-300 "> 
                                 Change amount
@@ -128,7 +130,8 @@
                     e.preventDefault();
 
                     let itemNewCount;
-                    const itemId = selectElement.value.split(',')[1] || inputElement.dataset.itemId;
+                    //  Note that, input has  custom attribute item_id
+                    const itemId = selectElement.value.split(',')[1] || inputElement.getAttribute('item-id');
                     console.log('item : ', itemId);
 
                     // Determine the new item count (from input or select)
