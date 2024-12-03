@@ -72,7 +72,7 @@
                         console.log(`cart: ${localStorage.getItem('cart')}`);
 
 
-                                    // Also note that Its inefficient calculate total count of
+                        // Also note that Its inefficient calculate total count of
                         // cart items dynamically, instead store and update cartCount here
 
                         const cartCount = Number(localStorage.getItem('cartCount'))
@@ -90,6 +90,8 @@
                         // any page loads. Hence We will do it (without increment ) outside
                         // at the master template as well( since it should load on every site)
 
+
+
                         const navCartCounter = document.querySelector('.nav-cart-counter')
                         const newCount = localStorage.getItem('cartCount')
 
@@ -99,17 +101,15 @@
 
                         alert('Hey, new item has been added the Cart!')
 
+                        const event = new CustomEvent('cartUpdated'); 
+                        document.dispatchEvent(event);
+
                     });
                 } else {
                     console.error('Cart button not found.');
                 }
             });
-
-
-            
-            
-        
-        
+  
 
     </script>
 
