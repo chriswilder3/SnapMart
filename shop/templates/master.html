@@ -63,10 +63,34 @@
         <p> &#169; SnapMart limited.  </p> 
     </footer>
    
+    
+
+
     <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Ensure the nav cart counter is updated
+            const newCount = localStorage.getItem('cartCount');
+
+            if (newCount) {
+                const navCartCounter = document.querySelector('.nav-cart-counter');
+                if (navCartCounter) {
+                    navCartCounter.textContent = `${newCount}`;
+                }
+            }
+
+            // Set the value of the hidden cart input for the form
+            const cartbtn = document.querySelector('.cart-data');
+            const cartData = localStorage.getItem('cart');
+
+            if (cartbtn && cartData) {
+                cartbtn.value = JSON.stringify(JSON.parse(cartData));
+            }
+        });
+    </script>
+    {% comment %} <script>
         // As said before its necessary that cartcount is shown even when as soon as
         // any page loads. But make sure its not null before showing.
-        
+
         const newCount = localStorage.getItem('cartCount')
 
         if(newCount){
@@ -88,7 +112,7 @@
         // It wont work
         
 
-    </script>
+    </script> {% endcomment %}
 
     
     

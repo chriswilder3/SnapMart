@@ -73,27 +73,35 @@ def cart_view(request):
     # cart elemts here directly and fetch them Here.
 
     cartData = request.POST.get('cartData')
-    cartData = json.loads(cartData)
-    # print(cartData)
-    print(cartData)
-    # Now for all the keys in the above object, we get corrsponding items
 
-    items = Product.objects.none()
-    # This creates an empty queryset to which we can append specific 
-    # cart products.
-    # Learn more on queryset objects here : https://chatgpt.com/share/674ccec2-24ec-8002-967d-3eebcd196b2c
-    # and through ChatGPT PDF : Queryset IMP operations.pdf
+    if cartData:
+        # if cart is not empty
+        cartData = json.loads(cartData)
+        # print(cartData)
+        print(cartData)
+        # Now for all the keys in the above object, we get corrsponding items
 
-    for key,val in cartData.items():
-        # print(key, val)
-        prod = Product.objects.filter(id = key)
-        items = items | prod  # This combines items queryset with prod each time
-    # print(items)
-    context = {
-        'items' : items,
-        'cartCount': cartData,
-    }
-    print( type(cartData))
+        items = Product.objects.none()
+        # This creates an empty queryset to which we can append specific 
+        # cart products.
+        # Learn more on queryset objects here : https://chatgpt.com/share/674ccec2-24ec-8002-967d-3eebcd196b2c
+        # and through ChatGPT PDF : Queryset IMP operations.pdf
+
+        for key,val in cartData.items():
+            # print(key, val)
+            prod = Product.objects.filter(id = key)
+            items = items | prod  # This combines items queryset with prod each time
+        # print(items)
+        context = {
+            'items' : items,
+            'cartCount': cartData,
+            'cartEmpty':False,
+        }
+        print( type(cartData))
+    else:
+        context = {
+            'cartEmpty':True,
+        }
     return render(request, 'cartview.html',context)
 
     
