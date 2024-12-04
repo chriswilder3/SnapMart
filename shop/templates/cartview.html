@@ -28,7 +28,8 @@
             <div class="flex md:flex-row gap-5">
                 <img class="w-52 rounded " src="{{item.image}}" alt="">
                 <div class="flex flex-col my-auto">
-                    <p class="self pb-4 "> in <span class="bg-slate-200 p-1 rounded">{{ item.category }}</span> </p>
+                    <p class="mb-2 text-xl font-semibold">{{item.name}}</p>
+                    <p class="self pb-4 "> <span class="bg-slate-200 p-1 rounded">{{ item.category }}</span> </p>
                     <p class="px-2 line-through ml-1 text-sm text-gray-600 "> <i> &#36 {{ item.price }} </i> </p>
                     <p class="px-2 mb-2 text-green-500 text-lg font-semibold ">  &#36 {{ item.discount_price }}  </p>
                     
@@ -81,11 +82,15 @@
                             </button>
                         </form>  
                         
-
-                        <a href="" class="bg-red-400 text-white p-2  px-5 rounded 
+                        <form action="{% url 'cartview' %}" method="post" class="deleteform">
+                            {% csrf_token %}
+                            <input type="hidden" value="{{item.id}}" name="cartData" class="delete-1">
+                            <button type="submit" class="deletebtn bg-red-400 text-white p-2  px-5 rounded 
                                 transition delay-75 hover:bg-red-500 hover:scale-105 shadow-md shadow-slate-300 " > 
-                            Delete 
-                        </a>
+                                Delete 
+                            </button>
+                        </form>
+                        
                     </div>
                 </div>
             </div>            
@@ -262,7 +267,48 @@
                 // Now display it onto pricedisplay
             priceDisplay.innerHTML = ` $ <span class="line-through italic text-zinc-600 text-sm "> ${totalPrice} </span> ${totalDiscountPrice}`
             document.querySelector('.final-price').value = totalDiscountPrice
-            });
+        });
+
+        // Lets see what inside the deleteform
+        // What I wish to do here is to get the cart Data
+        // update it by deleting current item from it. then send the same data
+        // to the cartview. just like we did for the navcartbtn in the
+        // master template.
+
+        const deleteform = document.querySelector('.deleteform')
+        deleteform.addEventListener('submit', function(e){
+            e.preventDefault()
+            
+            let hiddenDelete = document.querySelector('.delete-1')
+            const id = hiddenDelete.value
+            const cart = JSON.parse(localStorage.getItem('cart'))
+            console.log(cart);
+            console.log(id);
+
+            delete cart[id];
+
+            console.log(cart);
+            // Its working. Now update this cart in LocalStorage
+
+            localStorage.setItem('cart', JSON.stringify(cart))
+
+            // Now instead of doing anything just send this cartData
+            // to backend cartview, setting the input value to it
+            hiddenDelete.value = JSON.stringify(cart);
+            
+            // Now update the count as well.
+            
+            // Now fire up the event so that it can recalculate 
+            // cart and count 
+            const event = new CustomEvent('cartUpdated');
+            document.dispatchEvent(event);
+
+            this.submit();
+            
+            
+
+            })
+
         });
     </script>
     {% endif %}

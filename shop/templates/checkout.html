@@ -3,15 +3,15 @@
 
 
     <div class=" bg-slate-100 mx-8 my-4 rounded items-center">
-        <h3 class=" text-4xl px-4 py-2 ml-4 font-bold text-slate-500">
+        <h3 class=" text-4xl px-2 py-2 ml-4 font-bold text-slate-500">
             Checkout 
         </h3>
 
-        <p class=" text-slate-600 text-2xl ml-4 px-4 font-semibold mx-auto "> Total price : </p>
-        <p class="total-price text-zinc-700 ml-4 px-4 text-xl mx-auto"> $ {{price}} </p>
+        <p class=" text-slate-600 text-2xl ml-4 px-4 font-semibold "> Total price : </p>
+        <p class="total-price text-zinc-700 ml-4 px-4 text-xl "> $ {{price}} </p>
         
         <hr>
-        <h3 class=" text-4xl px-4 py-2 ml-4 font-bold text-sky-500">
+        <h3 class=" text-4xl px-2 py-2 ml-4 font-bold text-sky-500">
             Enter your details 
         </h3>
 
@@ -19,10 +19,10 @@
             {% csrf_token %}
             <span class="flex flex-row *:p-2 *:px-8 *:m-4 "><input type="text" name="firstname" placeholder="Firstname">
             <input type="text" name="lastname" placeholder="Lastname"> </span>
-
-            <input class="p-2 m-4" type="text" name="adress" placeholder="Address">
+            <input class="p-2 m-4 px-2 " type="number" name="phone" placeholder="Mobile no.">
+            <input class="p-2 m-4 px-2 " type="text" name="adress" placeholder="Address">
             
-            <button type="submit" class="bg-sky-400 text-white p-2  px-5 rounded m-2
+            <button type="submit" class="bg-sky-400 text-white p-2  px-5 rounded m-8
                     transition delay-75 hover:bg-sky-500 hover:scale-105 shadow-md shadow-slate-300 "> 
                 Submit
             </button>

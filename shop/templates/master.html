@@ -93,15 +93,22 @@
             }
 
             document.addEventListener('cartUpdated', function(){
-                const upDatedCount = localStorage.getItem('cartCount')
-                const navCartCounter = document.querySelector('.nav-cart-counter')
-                navCartCounter.textContent= `${upDatedCount}`
                 
-                const cartbtn = document.querySelector('.cart-data');
-                const cartData = localStorage.getItem('cart');
+                const navCartCounter = document.querySelector('.nav-cart-counter')
 
+                const cartData = JSON.parse(localStorage.getItem('cart'));
+
+                let upDatedCount = 0
+                for( key in cartData){
+                    upDatedCount +=Number(cartData[key])
+                }
+                localStorage.setItem('cartCount',upDatedCount)
+                
+                navCartCounter.textContent= `${upDatedCount}`
+
+                const cartbtn = document.querySelector('.cart-data');
                 if (cartbtn && cartData) {
-                    cartbtn.value = JSON.stringify(JSON.parse(cartData));
+                    cartbtn.value = JSON.stringify(cartData);
                 }
             })
             

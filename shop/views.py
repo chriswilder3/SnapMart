@@ -105,6 +105,18 @@ def cart_view(request):
         }
     return render(request, 'cartview.html',context)
 
+def cart_delete( request ):
+    data = request.POST.get('items')
+    deleteId = request.POST.get('id')
+    # print(data)
+    # if data:
+    #     data = json.loads(data)
+    #     print(type(data))
+    print(deleteId)
+    #a = data.filter(id = deleteId)
+    #print(a)
+    return HttpResponse('Hi')
+
     
 def master( request):
     # This view is used to send categories to master on any page
