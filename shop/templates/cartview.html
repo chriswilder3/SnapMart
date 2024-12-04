@@ -8,7 +8,7 @@
     Then the view will get the value of cart in the localStorage, which
     processes it and sends corresponding data here. -->
 
-    <h3 class=" text-3xl py-2 my-2 mx-auto text-sky-500 font-semibold">
+    <h3 class=" text-3xl py-2 my-2  text-center text-sky-500 font-semibold">
         Shopping Cart
     </h3>
     
@@ -297,7 +297,7 @@
             hiddenDelete.value = JSON.stringify(cart);
             
             // Now update the count as well.
-            
+
             // Now fire up the event so that it can recalculate 
             // cart and count 
             const event = new CustomEvent('cartUpdated');
