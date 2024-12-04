@@ -152,3 +152,20 @@ def checkout(request):
         'price': totalPrice,
     }
     return render(request, 'checkout.html', context)
+
+def order(request):
+    cartData = request.POST.get('cartData')
+    first_name = request.POST.get('firstname')
+    last_name = request.POST.get('lastname')
+    phone = request.POST.get('phone')
+    email = request.POST.get('email')
+    address = request.POST.get('address')
+    city = request.POST.get('city')
+    state = request.POST.get('state')
+    pincode = request.POST.get('pincode')
+    context ={
+        
+    }
+    return render(request, 'order.html', context)
+
+    

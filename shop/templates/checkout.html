@@ -2,26 +2,65 @@
     {% block content %}
 
 
-    <div class=" bg-slate-100 mx-8 my-4 rounded items-center">
+    <div class=" bg-slate-100 mx-8 my-4 p-4 rounded items-center">
         <h3 class=" text-4xl px-2 py-2 ml-4 font-bold text-slate-500">
             Checkout 
         </h3>
 
         <p class=" text-slate-600 text-2xl ml-4 px-4 font-semibold "> Total price : </p>
         <p class="total-price text-zinc-700 ml-4 px-4 text-xl "> $ {{price}} </p>
-        
-        <hr>
-        <h3 class=" text-4xl px-2 py-2 ml-4 font-bold text-sky-500">
+    </div>   
+    <div class=" bg-slate-100 mx-8 my-4 rounded items-center p-2">    
+        <h3 class=" text-3xl px-2 py-2 my-3 ml-4 font-bold text-sky-500">
             Enter your details 
         </h3>
 
-        <form action="" method="post" class="flex flex-col " >
+        <form action="{% url 'order' %}" method="post" class="flex flex-col " >
             {% csrf_token %}
-            <span class="flex flex-row *:p-2 *:px-8 *:m-4 "><input type="text" name="firstname" placeholder="Firstname">
+            <input type="hidden" name="cartData" id="checkout-cart-data">
+            <span class="flex flex-row *:p-2 *:px-2 *:m-4 "><input type="text" name="firstname" placeholder="Firstname">
             <input type="text" name="lastname" placeholder="Lastname"> </span>
-            <input class="p-2 m-4 px-2 " type="number" name="phone" placeholder="Mobile no.">
-            <input class="p-2 m-4 px-2 " type="text" name="adress" placeholder="Address">
-            
+            <input class="p-2 m-4 px-2 " max="10" type="number" name="phone" placeholder="Mobile no.(+91)">
+            <input class="p-2 m-4 px-2 " type="email" name="email" placeholder="Email ID">
+            <input class="p-2 m-4 px-2 " type="text" name="address" placeholder="Address">
+            <span class="flex flex-row *:p-2 *:px-2 *:m-4 ">
+                <input type="text" name="city" placeholder="City">
+                
+                <label for="state"> State</label>
+                <select name="state" id="state" >
+                        <option value="andhra_pradesh">Andhra Pradesh</option>
+                        <option value="arunachal_pradesh">Arunachal Pradesh</option>
+                        <option value="assam">Assam</option>
+                        <option value="bihar">Bihar</option>
+                        <option value="chhattisgarh">Chhattisgarh</option>
+                        <option value="goa">Goa</option>
+                        <option value="gujarat">Gujarat</option>
+                        <option value="haryana">Haryana</option>
+                        <option value="himachal_pradesh">Himachal Pradesh</option>
+                        <option value="jharkhand">Jharkhand</option>
+                        <option value="karnataka">Karnataka</option>
+                        <option value="kerala">Kerala</option>
+                        <option value="madhya_pradesh">Madhya Pradesh</option>
+                        <option value="maharashtra">Maharashtra</option>
+                        <option value="manipur">Manipur</option>
+                        <option value="meghalaya">Meghalaya</option>
+                        <option value="mizoram">Mizoram</option>
+                        <option value="nagaland">Nagaland</option>
+                        <option value="odisha">Odisha</option>
+                        <option value="punjab">Punjab</option>
+                        <option value="rajasthan">Rajasthan</option>
+                        <option value="sikkim">Sikkim</option>
+                        <option value="tamil_nadu">Tamil Nadu</option>
+                        <option value="telangana">Telangana</option>
+                        <option value="tripura">Tripura</option>
+                        <option value="uttar_pradesh">Uttar Pradesh</option>
+                        <option value="uttarakhand">Uttarakhand</option>
+                        <option value="west_bengal">West Bengal</option>
+                </select>                      
+                <input class="p-2 m-4 px-2 " max="6" type="number" name="pincode" placeholder="Pin Code">
+                
+            </span>
+
             <button type="submit" class="bg-sky-400 text-white p-2  px-5 rounded m-8
                     transition delay-75 hover:bg-sky-500 hover:scale-105 shadow-md shadow-slate-300 "> 
                 Submit
@@ -29,5 +68,11 @@
             
         </form>
     </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function(){
+            const cart = JSON.parse(localStorage.getItem('cart'))
+            document.querySelector('.checkout-cart-data').value = JSON.stringify(cart)
+        })
+    </script>
    
 {% endblock %}
