@@ -19,7 +19,7 @@
 </head>
 <body class="min-h-screen flex flex-col">
     <!-- bg-gradient-to-r from-pink-200 to-orange-200 p-5  -->
-    <nav class="flex md:flex-row flex-col gap-10 ml-6 mt-4 p-4 items-center justify-between">
+    <nav class="fixed flex md:flex-row flex-col gap-10 ml-6 mt-4 p-4 items-center justify-between bg-white w-full">
         <a href="/" class="text-slate-600 hover:text-slate-900 hover:scale-105 text-lg">
             Home
         </a>
@@ -58,12 +58,11 @@
             Login
         </a>
     </nav>
-
-    
-    
-    {% block content %}
-    
-    {% endblock %}
+    <div class="mt-24">
+        {% block content %}
+        
+        {% endblock %}
+    </div>
     <footer class="mt-auto  text-center text-sm text-slate-300 py-3 bg-slate-600 ">
         <div class=" flex gap-4 mx-auto justify-center my-2"><span> Conditions of sale </span> <span> Privacy notice</span></div>
         <p> &#169; SnapMart limited.  </p> 
@@ -103,7 +102,7 @@
                     upDatedCount +=Number(cartData[key])
                 }
                 localStorage.setItem('cartCount',upDatedCount)
-                
+
                 navCartCounter.textContent= `${upDatedCount}`
 
                 const cartbtn = document.querySelector('.cart-data');
