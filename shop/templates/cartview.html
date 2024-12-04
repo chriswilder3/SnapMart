@@ -18,10 +18,11 @@
             No carts in the item!
         </h3>
     {% else %}
-    
+
+<div class="grid grid-cols-4">
+    <div class="col-span-3">
     {% for item in items %}
 
-    
     <div class="item-card border-2 border-slate-300 my-2  px-10 py-5 text-wrap font-medium rounded
                     text-slate-600 mx-auto "> 
             <div class="flex md:flex-row gap-5">
@@ -69,7 +70,9 @@
                                 id="custom_quantity" 
                                 min="11"
                                 placeholder="Enter quantity"
-                                item-id = "{{item.id}}"
+                                item-id = "{{ item.id }}"
+                                item-price = "{{ item.price }}"
+                                discount-price = " {{ item.discount_price }}"
                             />
                             <!-- input has  custom attribute item_id -->
                             <button type="button" class="change-amount-btn bg-amber-200 p-2 ml-1 px-2 rounded 
@@ -77,23 +80,30 @@
                                 Change amount
                             </button>
                         </form>  
+                        
 
-                        <a href="" class="bg-sky-400 text-white p-2  px-5 rounded 
-                                transition delay-75 hover:bg-sky-500 hover:scale-105 shadow-md shadow-slate-300 " > 
-                            Buy Now 
-                        </a>
                         <a href="" class="bg-red-400 text-white p-2  px-5 rounded 
                                 transition delay-75 hover:bg-red-500 hover:scale-105 shadow-md shadow-slate-300 " > 
                             Delete 
                         </a>
                     </div>
                 </div>
-            </div>    
-                
-                
+            </div>            
+        </div>
+        {% endfor %}
     </div>
-    {% endfor %}
-    
+    <div class="col-span-1 flex mx-auto flex-col gap-2 bg-slate-200 max-h-fit">
+        <h1 class=""> checkout</h1>
+
+        <p> Total price : <span class="total-price"> </span></p>
+        <form action="">
+            <a href="" class="bg-sky-400 text-white p-2  px-5 rounded 
+                    transition delay-75 hover:bg-sky-500 hover:scale-105 shadow-md shadow-slate-300 " > 
+                Buy Now 
+            </a>
+        </form> 
+    </div>
+</div>
     <script>
 
         document.addEventListener('DOMContentLoaded', function () {
@@ -184,7 +194,35 @@
                         selectElement.classList.remove('hidden'); // Show select
                     }
                 });
+
             });
+
+            // We want to multiply the price of each item with its
+            // quantity and then add each of them to get total price
+            
+            const priceDisplay = document.querySelector('.total-price')
+            let totalPrice = 0
+            let totalDiscountPrice = 0
+            const cart = JSON.parse(localStorage.getItem('cart'))
+
+            // We will use inputelements since our itemid and price
+            // are obtained from it
+
+            inputElements.forEach( (inputElement, index) =>
+                { 
+                    const key = inputElement.getAttribute('item-id')
+                    const currPrice = inputElement.getAttribute('item-price')
+                    const currDiscountPrice = inputElement.getAttribute('discount-price')
+
+                    totalPrice += cart[key]* Number(currPrice) // cart[key] is quantity
+                    totalDiscountPrice += cart[key]* Number(currDiscountPrice) // cart[key] is quantity
+                    
+                }
+            )
+            console.log(Math.round(totalPrice*100)/100, Math.round(totalDiscountPrice*100)/100);
+
+        
+
         });
     </script>
     {% endif %}

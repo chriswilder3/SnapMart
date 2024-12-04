@@ -80,7 +80,6 @@ def cart_view(request):
         # if cart is not empty
         cartData = json.loads(cartData)
         # print(cartData)
-        print(cartData)
         # Now for all the keys in the above object, we get corrsponding items
 
         items = Product.objects.none()
@@ -99,7 +98,7 @@ def cart_view(request):
             'cartCount': cartData,
             'cartEmpty':False,
         }
-        print( type(cartData))
+        # print( type(cartData))
     else:
         context = {
             'cartEmpty':True,
@@ -114,7 +113,7 @@ def master( request):
     categories = Product.objects.all().values_list('category' ,flat = True)
     categories = list(set(categories)) # get unique values
     # get unique values of list
-    print(categories)
+    # print(categories)
     
     context = {
         'categories' :categories,
@@ -134,3 +133,10 @@ def categories( request, category):
                 'category':category,
             } 
     return render( request, 'categories.html', context)
+
+def checkout(request,id):
+    item = Product.object.get(id = id)
+    context={
+        'item':item,
+    }
+    return render(request, 'checkout.html', context)
