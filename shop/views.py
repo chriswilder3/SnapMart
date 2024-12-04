@@ -134,9 +134,9 @@ def categories( request, category):
             } 
     return render( request, 'categories.html', context)
 
-def checkout(request,id):
-    item = Product.object.get(id = id)
-    context={
-        'item':item,
+def checkout(request):
+    totalPrice = request.POST.get('finalPrice')
+    context ={
+        'price': totalPrice,
     }
     return render(request, 'checkout.html', context)

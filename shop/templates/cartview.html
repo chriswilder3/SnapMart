@@ -92,15 +92,17 @@
         </div>
         {% endfor %}
     </div>
-    <div class="col-span-1 flex mx-auto mb-auto flex-col gap-2 bg-slate-200 m-1 p-4">
-        <h1 class=""> checkout</h1>
+    <div class="col-span-1 flex mx-auto mb-auto flex-col gap-2 bg-slate-200 m-1 p-7 rounded">
+        <h1 class="  text-2xl font-bold"> Checkout</h1>
 
-        <p class="total-price"> </p>
-        <form action="">
+        <p class=" text-slate-600 font-semibold "> Total price : </p>
+        <p class="total-price text-zinc-700 text-xl"> </p>
+        <form action="{% url 'checkout' %}" method="post">
+            {% csrf_token %}
             <input type="hidden" name="finalPrice" class="final-price">
-            <a href="" class="bg-sky-400 text-white p-2  px-5 rounded 
+            <button type="submit" class="bg-sky-400 text-white p-2  px-5 rounded 
                     transition delay-75 hover:bg-sky-500 hover:scale-105 shadow-md shadow-slate-300 " > 
-                Proceed to checkout </a>
+                Proceed to checkout </button>
         </form> 
     </div>
 </div>
@@ -197,36 +199,70 @@
 
             });
 
-            // We want to multiply the price of each item with its
-            // quantity and then add each of them to get total price
             
+
+        });
+
+    document.addEventListener('DOMContentLoaded', () => {
+
+        // We want to multiply the price of each item with its
+        // quantity and then add each of them to get total price
+            
+        const priceDisplay = document.querySelector('.total-price')
+        let totalPrice = 0
+        let totalDiscountPrice = 0
+            
+
+        // We will use inputelements since our itemid and price
+        // are obtained from it
+        const inputElements = document.querySelectorAll('.change-amount-input')
+        inputElements.forEach( (inputElement, index) =>
+            {   
+                const cart = JSON.parse(localStorage.getItem('cart'))
+                const key = inputElement.getAttribute('item-id')
+                const currPrice = inputElement.getAttribute('item-price')
+                const currDiscountPrice = inputElement.getAttribute('discount-price')
+
+                totalPrice += cart[key]* Number(currPrice) // cart[key] is quantity
+                totalDiscountPrice += cart[key]* Number(currDiscountPrice) // cart[key] is quantity
+                    
+                }
+        )
+        totalPrice = Math.round(totalPrice*100)/100
+        totalDiscountPrice =  Math.round(totalDiscountPrice*100)/100
+            
+        // Now display it onto pricedisplay
+        priceDisplay.innerHTML = ` $ <span class="line-through italic text-zinc-600 text-sm "> ${totalPrice} </span> ${totalDiscountPrice}`
+        document.querySelector('.final-price').value = totalDiscountPrice
+
+        
+         // But remember We need to do the same things when items are updated.
+        document.addEventListener('cartUpdated', function(){
+
             const priceDisplay = document.querySelector('.total-price')
             let totalPrice = 0
             let totalDiscountPrice = 0
-            const cart = JSON.parse(localStorage.getItem('cart'))
-
-            // We will use inputelements since our itemid and price
-            // are obtained from it
-
+            const inputElements = document.querySelectorAll('.change-amount-input')
+                
             inputElements.forEach( (inputElement, index) =>
-                { 
-                    const key = inputElement.getAttribute('item-id')
-                    const currPrice = inputElement.getAttribute('item-price')
-                    const currDiscountPrice = inputElement.getAttribute('discount-price')
+                    {   
+                        const cart = JSON.parse(localStorage.getItem('cart'))
+                        const key = inputElement.getAttribute('item-id')
+                        const currPrice = inputElement.getAttribute('item-price')
+                        const currDiscountPrice = inputElement.getAttribute('discount-price')
 
-                    totalPrice += cart[key]* Number(currPrice) // cart[key] is quantity
-                    totalDiscountPrice += cart[key]* Number(currDiscountPrice) // cart[key] is quantity
-                    
-                }
-            )
+                        totalPrice += cart[key]* Number(currPrice) // cart[key] is quantity
+                        totalDiscountPrice += cart[key]* Number(currDiscountPrice) // cart[key] is quantity
+                        
+                    }
+                )
             totalPrice = Math.round(totalPrice*100)/100
             totalDiscountPrice =  Math.round(totalDiscountPrice*100)/100
-            
-            // Now display it onto pricedisplay
-            priceDisplay.innerHTML = ` Total price : <span class="line-through"> ${totalPrice} </span> ${totalDiscountPrice}`
+                
+                // Now display it onto pricedisplay
+            priceDisplay.innerHTML = ` $ <span class="line-through italic text-zinc-600 text-sm "> ${totalPrice} </span> ${totalDiscountPrice}`
             document.querySelector('.final-price').value = totalDiscountPrice
-
-
+            });
         });
     </script>
     {% endif %}
