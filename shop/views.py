@@ -2,7 +2,7 @@ from django.shortcuts import render,redirect
 
 from django.http import HttpResponse
 
-from .models import Product
+from .models import Product, Order
 
 from django.core.paginator import Paginator
 
@@ -163,8 +163,12 @@ def order(request):
     city = request.POST.get('city')
     state = request.POST.get('state')
     pincode = request.POST.get('pincode')
+
+    order = Order(items = cartData, first_name= first_name, last_name = last_name, phone= phone, email= email, address =address, city = city, state =state, pincode = pincode)
+    order.save()
+
     context ={
-        
+
     }
     return render(request, 'order.html', context)
 
