@@ -275,11 +275,13 @@
         // to the cartview. just like we did for the navcartbtn in the
         // master template.
 
-        const deleteform = document.querySelector('.deleteform')
-        deleteform.addEventListener('submit', function(e){
+        const deleteforms = document.querySelectorAll('.deleteform')
+
+        deleteforms.forEach((form, index)=>{
+            form.addEventListener('submit', function(e){
             e.preventDefault()
             
-            let hiddenDelete = document.querySelector('.delete-1')
+            let hiddenDelete = form.querySelector('.delete-1')
             const id = hiddenDelete.value
             const cart = JSON.parse(localStorage.getItem('cart'))
             console.log(cart);
@@ -304,6 +306,9 @@
             document.dispatchEvent(event);
 
             this.submit();
+
+
+            }) 
             
             
 

@@ -43,3 +43,14 @@ This project is an e-commerce web application built using Django and JavaScript.
 
 #### JavaScript
 - JavaScript code for dynamically updating cart count and fetching categories is included in the HTML templates.
+
+## Progress Screenshots
+- ![ ](media/screenshots/index.png)
+- ![ ](media/screenshots/detail.png)
+- ![ ](media/screenshots/categories.png)
+- ![ ](media/screenshots/search.png)
+- ![ ](media/screenshots/cartview.png)
+- ![ ](media/screenshots/checkout.png)
+- ![ ](media/screenshots/ordersuccess.png)
+
+

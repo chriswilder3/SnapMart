@@ -164,7 +164,7 @@ def order(request):
     state = request.POST.get('state')
     pincode = request.POST.get('pincode')
 
-    order = Order(items = cartData, first_name= first_name, last_name = last_name, phone= phone, email= email, address =address, city = city, state =state, pincode = pincode)
+    order = Order(order_contents = cartData, first_name= first_name, last_name = last_name, phone= phone, email= email, address =address, city = city, state =state, pincode = pincode)
     order.save()
 
     context ={
