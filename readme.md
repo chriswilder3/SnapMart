@@ -1,7 +1,8 @@
 # E-commerce Web Application
 
 ## Overview
-This project is an e-commerce web application built using Django and JavaScript. It features product listings, search functionality, detailed product views, and cart management. The application includes pagination for efficient handling of large datasets.
+This project is e-commerce web application built using Django and JavaScript. Its actually the final one of the three e-commerce applications I built. Check out my github for other two.
+It has complete features of professional e-commerce application like product listings, search functionality, detailed product views, and cart management. The application includes pagination for efficient handling of large datasets.
 
 ## Features
 - **Home Page:** Displays all products with pagination.
@@ -9,6 +10,7 @@ This project is an e-commerce web application built using Django and JavaScript.
 - **Product Details:** Provides a detailed view of each product.
 - **Cart Management:** Handles the addition and removal of products in the shopping cart.
 - **Category Management:** Displays products based on selected categories.
+- **Order Generation:** Generates orders automatically based on checkout price and contents.
 
 ## Technologies Used
 - **Backend:** Django, Python
@@ -19,7 +21,7 @@ This project is an e-commerce web application built using Django and JavaScript.
 ## Installation
 1. Clone the repository:
    ```sh
-   git clone https://github.com/yourusername/yourrepository.git
+   git clone https://github.com/chriswilder3/snapmart.git
    ```
    
 ### Usage
@@ -27,6 +29,8 @@ This project is an e-commerce web application built using Django and JavaScript.
 - Use the search bar to find specific products.
 - Click on a product to view its details.
 - Add products to the cart and manage your selections.
+- Look at total price calculated and decide on checkout
+- Enter details of recipient on checkout page and confirm ordering.
 - View and filter products by category.
 
 ### Project Structure
@@ -40,6 +44,11 @@ This project is an e-commerce web application built using Django and JavaScript.
   - Implements logic to dynamically manage cart items, including updating quantities and handling empty carts.
 - `categories.html`: The template for displaying products by category.
   - Displays products in a specific category with pagination.
+- `checkout.html`: The template for confirming price finally and entering user details (ex : Name, adrress, contact etc)
+- `order.html`: The template for displaying order confirmation success
 
 #### JavaScript
 - JavaScript code for dynamically updating cart count and fetching categories is included in the HTML templates.
+
+#### Django
+- Used extensively for backend communication by Javascript. Also extensively used in user and auth management.
