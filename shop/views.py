@@ -155,6 +155,17 @@ def checkout(request):
 
 def order(request):
     cartData = request.POST.get('cartData')
+    cart = json.loads(cartData)
+    totalPrice = 0.0 
+    # Note this price already discounted
+    for itemid in cart:
+        product = Product.objects.get(id = itemid)
+        # print(product, product.discount_price)
+        # print(itemid,cart[itemid], product.price)
+        totalPrice += float(cart[itemid])*float(product.discount_price)
+    # print('price : ',totalPrice)
+
+
     first_name = request.POST.get('firstname')
     last_name = request.POST.get('lastname')
     phone = request.POST.get('phone')
@@ -163,8 +174,8 @@ def order(request):
     city = request.POST.get('city')
     state = request.POST.get('state')
     pincode = request.POST.get('pincode')
-
-    order = Order(order_contents = cartData, first_name= first_name, last_name = last_name, phone= phone, email= email, address =address, city = city, state =state, pincode = pincode)
+    
+    order = Order(order_contents = cartData,price = totalPrice, first_name= first_name, last_name = last_name, phone= phone, email= email, address =address, city = city, state =state, pincode = pincode)
     order.save()
 
     context ={

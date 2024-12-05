@@ -20,6 +20,7 @@ class Order(models.Model):
     # Each order is comprise of set of items in it and the details 
     # the user who ordered it.
     order_contents = models.CharField( max_length = 1000, null = True)
+    price = models.FloatField( null = True)
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
     phone = models.CharField(max_length=15)
