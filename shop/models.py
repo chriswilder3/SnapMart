@@ -17,7 +17,7 @@ class Product(models.Model):
         return f'{self.name}'
 
 class Order(models.Model):
-    # Each order is comprise of set of items in it and the details 
+    # Each order is comprised of set of items in it and the details 
     # the user who ordered it.
     order_contents = models.CharField( max_length = 1000, null = True)
     price = models.FloatField( null = True)
